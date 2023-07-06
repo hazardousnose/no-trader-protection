@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml>
+	<ModInfo>
+		<Name value="NoTraderProtection" />
+		<Description value="Allows the player to build in the protected Trader Area." />
+		<Author value="HazardousNose" />
+		<Version value="0.1.0" />
+	</ModInfo>
+</xml>

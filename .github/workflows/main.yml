@@ -1,0 +1,48 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compute next tag
+        id: compute_tag
+        uses: craig-day/compute-tag@v14
+        with:
+          github_token: ${{ github.token }}
+          version_scheme: semantic
+          version_type: patch
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Download Assemblies
+        run: aws s3 sync s3://7d2d-server-files/alpha-21.0/assemblies .\7d2d-server-files\alpha-21.0\assemblies
+      - uses: microsoft/setup-msbuild@v1
+      - name: build
+        env:
+          SEVEN_DAYS_ASSEMBLIES: .\7d2d-server-files
+          SEVEN_DAYS_TARGET_VERSION: alpha-21.0
+        run: msbuild NoTraderProtection.csproj -property:Configuration=Release
+      - name: package
+        run: |
+          mkdir NoTraderProtection
+          cp ModFolder/* NoTraderProtection/
+          cp bin/Release/NoTraderProtection.dll NoTraderProtection/
+          Compress-Archive -Path .\NoTraderProtection -DestinationPath NoTraderProtection-${{steps.compute_tag.outputs.next_tag}}.zip
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          name: ${{ steps.compute_tag.outputs.next_tag }}
+          tag_name: ${{ steps.compute_tag.outputs.next_tag }}
+          generate_release_notes: true
+          files: |
+            NoTraderProtection-${{steps.compute_tag.outputs.next_tag}}.zip

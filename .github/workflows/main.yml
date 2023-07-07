@@ -18,8 +18,8 @@ jobs:
           version_type: patch
       - name: Download Assemblies
         env:
-          AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           mkdir .\7d2d-server-files\alpha-21.0\assemblies
           aws s3 sync s3://7d2d-server-files/alpha21.0/asseblies .\7d2d-server-files\alpha-21.0\assemblies

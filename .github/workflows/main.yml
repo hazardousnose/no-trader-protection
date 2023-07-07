@@ -16,8 +16,18 @@ jobs:
           github_token: ${{ github.token }}
           version_scheme: semantic
           version_type: patch
+      - name: Download Assemblies
+        env:
+          AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
+        run: |
+          mkdir .\7d2d-server-files\alpha-21.0\assemblies
+          aws s3 sync s3://7d2d-server-files/alpha21.0/asseblies .\7d2d-server-files\alpha-21.0\assemblies
       - uses: microsoft/setup-msbuild@v1
       - name: build
+        env:
+          SEVEN_DAYS_ASSEMBLIES: .\7d2d-server-files
+          SEVEN_DAYS_TARGET_VERSION: alpha-21.0
         run: msbuild NoTraderProtection.csproj -property:Configuration=Release
       - name: package
         run: |

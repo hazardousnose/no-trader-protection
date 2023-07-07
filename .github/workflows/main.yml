@@ -35,7 +35,7 @@ jobs:
           mkdir NoTraderProtection
           cp ModFolder/* NoTraderProtection/
           cp bin/Release/NoTraderProtection.dll NoTraderProtection/
-          zip -r NoTraderProtection-${{steps.compute_tag.outputs.next_tag}}.zip NoTraderProtection
+          Compress-Archive -Path .\NoTraderProtection -DestinationPath NoTraderProtection-${{steps.compute_tag.outputs.next_tag}}.zip
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:

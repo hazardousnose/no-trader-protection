@@ -32,13 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>%SEVEN_DAYS_ASSEMBLIES%\%SEVEN_DAYS_TARGET_VERSION%\assemblies\0Harmony.dll</HintPath>
+      <HintPath>$(SEVEN_DAYS_ASSEMBLIES)\$(SEVEN_DAYS_TARGET_VERSION)\assemblies\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>%SEVEN_DAYS_ASSEMBLIES%\%SEVEN_DAYS_TARGET_VERSION%\assemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(SEVEN_DAYS_ASSEMBLIES)\$(SEVEN_DAYS_TARGET_VERSION)\assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="LogLibrary">
-      <HintPath>%SEVEN_DAYS_ASSEMBLIES%\%SEVEN_DAYS_TARGET_VERSION%\assemblies\LogLibrary.dll</HintPath>
+      <HintPath>$(SEVEN_DAYS_ASSEMBLIES)\$(SEVEN_DAYS_TARGET_VERSION)\assemblies\LogLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
